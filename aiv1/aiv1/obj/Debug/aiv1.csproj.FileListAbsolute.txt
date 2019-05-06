@@ -1,0 +1,7 @@
+C:\Users\micha\source\repos\aiv1\aiv1\obj\Debug\aiv1.csprojAssemblyReference.cache
+C:\Users\micha\source\repos\aiv1\aiv1\obj\Debug\aiv1.csproj.CoreCompileInputs.cache
+C:\Users\micha\source\repos\aiv1\aiv1\bin\Debug\aiv1.exe.config
+C:\Users\micha\source\repos\aiv1\aiv1\bin\Debug\aiv1.exe
+C:\Users\micha\source\repos\aiv1\aiv1\bin\Debug\aiv1.pdb
+C:\Users\micha\source\repos\aiv1\aiv1\obj\Debug\aiv1.exe
+C:\Users\micha\source\repos\aiv1\aiv1\obj\Debug\aiv1.pdb
