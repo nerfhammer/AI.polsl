@@ -23,40 +23,40 @@ namespace aiv1
             int n = 100;     // liczba krokow obliczeniowych (epok) w procesie uczenia sieci
 
 
-            double[] w111 = new double[100];   // waga pierwszej warstwy pierwszej jednostki, pierwsze wejscie
-            double[] w112 = new double[100];   // waga pierwszej warstwy pierwszej jednostki, drugie wejscie
-            double[] w121 = new double[100];   // waga pierwszej warstwy drugiej jednostki, pierwsze wejscie
-            double[] w122 = new double[100];   // waga pierwszej warstwy drugiej jednostki, drugie wejscie
+            double[] w111 = new double[n + 1];   // waga pierwszej warstwy pierwszej jednostki, pierwsze wejscie
+            double[] w112 = new double[n + 1];   // waga pierwszej warstwy pierwszej jednostki, drugie wejscie
+            double[] w121 = new double[n + 1];   // waga pierwszej warstwy drugiej jednostki, pierwsze wejscie
+            double[] w122 = new double[n + 1];   // waga pierwszej warstwy drugiej jednostki, drugie wejscie
 
-            double[] w21 = new double[100]; // waga drugiej warstwy pierwsze wejscie
-            double[] w22 = new double[100];  //  waga drugiej warstwy drugie wejscie
+            double[] w21 = new double[n + 1]; // waga drugiej warstwy pierwsze wejscie
+            double[] w22 = new double[n + 1];  //  waga drugiej warstwy drugie wejscie
 
-            double[] beta = new double[100];   // wektory pomocnicze
-            double[] beta21 = new double[100];
-            double[] beta22 = new double[100];
-            double[] bb = new double[100];
-            double[] yy21 = new double[100];
+            double[] beta = new double[n];   // wektory pomocnicze
+            double[] beta21 = new double[n];
+            double[] beta22 = new double[n];
+            double[] bb = new double[n];
+            double[] yy21 = new double[n];
 
-            double[] w1s2 = new double[100];   // wektor dla wag skrosnych, wejscie 1 z jednostka 2
-            double[] w2s2 = new double[100];   // wektor dla wag skrosnych, wejscie 2 z jednostka 2
-            double[] w3s1 = new double[100];   // wektor dla wag skrosnych, wejscie 3 z jednostka 1
-            double[] w4s1 = new double[100];   // wektor dla wag skrosnych, wejscie 4 z jednostka 1
+            double[] w1s2 = new double[n + 1];   // wektor dla wag skrosnych, wejscie 1 z jednostka 2
+            double[] w2s2 = new double[n + 1];   // wektor dla wag skrosnych, wejscie 2 z jednostka 2
+            double[] w3s1 = new double[n + 1];   // wektor dla wag skrosnych, wejscie 3 z jednostka 1
+            double[] w4s1 = new double[n + 1];   // wektor dla wag skrosnych, wejscie 4 z jednostka 1
 
-            double[] dw111 = new double[100];  // wartosc o jaka zmieni sie waga w111 w danym kroku obliczeniowym,
-            double[] dw112 = new double[100];  // wartosc o jaka zmieni sie waga w112 w danym kroku obliczeniowym,
-            double[] dw121 = new double[100];  // wartosc o jaka zmieni sie waga w121 w danym kroku obliczeniowym,
-            double[] dw122 = new double[100];  // poniewaz chcemy wyliczyc jak zmieniaja sie wszystkie wagi
+            double[] dw111 = new double[n];  // wartosc o jaka zmieni sie waga w111 w danym kroku obliczeniowym,
+            double[] dw112 = new double[n];  // wartosc o jaka zmieni sie waga w112 w danym kroku obliczeniowym,
+            double[] dw121 = new double[n];  // wartosc o jaka zmieni sie waga w121 w danym kroku obliczeniowym,
+            double[] dw122 = new double[n];  // poniewaz chcemy wyliczyc jak zmieniaja sie wszystkie wagi
 
-            double[] dw1s2 = new double[100];  // jest to wektor do zmiennej wagi ktore laczy wejscie 1 z jednostka druga
-            double[] dw2s2 = new double[100];  // jest to wektor do zmiennej wagi ktore laczy wejscie 2 z jednostka druga
-            double[] dw3s1 = new double[100];  // jest to wektor do zmiennej wagi ktore laczy wejscie 3 z jednostka pierw.
-            double[] dw4s1 = new double[100];  // jest to wektor do zmiennej wagi ktore laczy wejscie 4 z jednostka pierw.
+            double[] dw1s2 = new double[n];  // jest to wektor do zmiennej wagi ktore laczy wejscie 1 z jednostka druga
+            double[] dw2s2 = new double[n];  // jest to wektor do zmiennej wagi ktore laczy wejscie 2 z jednostka druga
+            double[] dw3s1 = new double[n];  // jest to wektor do zmiennej wagi ktore laczy wejscie 3 z jednostka pierw.
+            double[] dw4s1 = new double[n];  // jest to wektor do zmiennej wagi ktore laczy wejscie 4 z jednostka pierw.
 
-            double[] dw21 = new double[100];   // wektor dla zmiany wagi w21
-            double[] dw22 = new double[100];   // wektor dla zmiany wagi w22
+            double[] dw21 = new double[n];   // wektor dla zmiany wagi w21
+            double[] dw22 = new double[n];   // wektor dla zmiany wagi w22
 
 
-            double[] blad = new double[100];   // blad sredniokwadratowy             blad = suma((d - u) * (d - u))
+            double[] blad = new double[n];   // blad sredniokwadratowy             blad = suma((d - u) * (d - u))
 
             // WEJŚCIA      WEJŚCIA        WEJŚCIA        WEJŚCIA     WEJŚCIA     WEJŚCIA     WEJŚCIA     WEJŚCIA
             // WEJŚCIA      WEJŚCIA        WEJŚCIA        WEJŚCIA     WEJŚCIA     WEJŚCIA     WEJŚCIA     WEJŚCIA
@@ -183,28 +183,80 @@ namespace aiv1
             }         // koniec uczenia sieci // koniec uczenia sieci // koniec uczenia sieci // koniec uczenia sieci // koniec uczenia sieci
                       // koniec uczenia sieci // koniec uczenia sieci // koniec uczenia sieci // koniec uczenia sieci // koniec uczenia sieci
 
-            double[] ut1 = new double[] { 23.9 / 25.05, 24.80/25.05, 24.97 / 25.05, 25 / 25.05 }; // wektor wejsc spolki gieldowej BOGDANKA
-            double[] ut2 = new double[] { 112 / 117.5, 115.5 / 117.5, 1, 1 }; // wektor wejsc spolki gieldowej DEBICA
-            double[] ut3 = new double[] { 5.10 / 5.12, 5.11 / 5.12, 1, 5.06 / 5.12 }; // wektor wejsc spolki gieldowej ECHO
-            double[] ut4 = new double[] { 1, 11.50 / 11.60, 11.3 / 11.6, 10.85 / 11.6 }; // wektor wejsc spolki gieldowej HELIO
+            double wt111 = w111[n]; // wartosci wagi w kroku ntym
+            double wt112 = w112[n];
+            double wt121 = w121[n];
+            double wt122 = w122[n];
+
+            double wt1s2 = w1s2[n];
+            double wt2s2 = w2s2[n];
+            double wt3s1 = w3s1[n];
+            double wt4s1 = w4s1[n];
+
+            double wt21 = w21[n];
+            double wt22 = w22[n];
+
+            double[] ut1 = new double[] { 23.9 / 25.05, 24.80/25.05, 24.97 / 25.05, 25 / 25.05 }; // wektor wejsc 1
+            double[] ut2 = new double[] { 115.5 / 118.9, 119 / 118.9, 1, 116.5/118.9 }; // wektor wejsc 2
+            double[] ut3 = new double[] { 296.5 / 310.8, 304.9 / 310.8, 1, 307.45 / 310.8 }; // wektor wejsc 3
+            double[] ut4 = new double[] { 57.23/59.82 , 59.16 / 59.82 , 1 , 58.5 / 59.82 }; // wektor wejsc 4
 
 
-            ut2(1) = 115.50 / 118.90;
-            ut2(2) = 118.00 / 118.90;
-            ut2(3) = 118.90 / 118.90;
-            ut2(4) = 116.50 / 118.90;
-
-            ut3(1) = 296.50 / 310.80;
-            ut3(2) = 304.90 / 310.80;
-            ut3(3) = 310.80 / 310.80;
-            ut3(4) = 307.45 / 310.80;
-
-            ut4(1) = 57.23 / 59.82;
-            ut4(2) = 59.16 / 59.82;
-            ut4(3) = 59.82 / 59.82;
-            ut4(4) = 58.50 / 59.82;
+            // liczymy pierwsza sume                                     111111111111111111111
 
 
+            double zt11 = ut1[0] * wt111 + ut2[0] * wt112 + ut3[0] * wt3s1 + ut4[0] * wt4s1;
+            double st11 = (1 / (1 + Exp(-zt11)));
+            double zt12 = ut3[0] * wt121 + ut4[0] * wt122 + ut1[0] * wt1s2 + ut2[0] * wt2s2;
+            double st12 = (1 / (1 + Exp(-zt12)));
+
+            double zt21 = st11 * wt21 + st12 * wt22;
+            double st21 = 1 / (1 + Exp(-zt21));
+
+
+                    // to jest sygnal na wyjsciu sieci, zatem mozemy obliczyc blad
+
+
+            // dla drugiego wektora                      22222222222222222222
+
+
+            zt11 = (ut1[1] * wt111) + (ut2[1] * wt112) + (ut3[1] * wt3s1) + (ut4[1] * wt4s1);
+            st11 = (1 / (1 + Exp(-zt11)));
+
+            zt12 = ut3[1] * wt121 + ut4[1] * wt122 + ut1[1] * wt1s2 + ut2[1] * wt2s2;
+            st12 = (1 / (1 + Exp(-zt12)));
+
+            zt21 = st11 * wt21 + st12 * wt22;
+            st21 = (1 / (1 + Exp(-zt21)));
+
+
+            // dla trzeciego wketora                     333333333333333333333
+
+
+            zt11 = ut1[2] * wt111 + ut2[2] * wt112 + ut3[2] * wt3s1 + ut4[2] * wt4s1;
+            st11 = (1 / (1 + Exp(-zt11)));
+
+            zt12 = ut3[2] * wt121 + ut4[2] * wt122 + ut1[2] * wt1s2 + ut2[2] * wt2s2;
+            st12 = (1 / (1 + Exp(-zt12)));
+
+            zt21 = st11 * wt21 + st12 * wt22;
+            st21 = (1 / (1 + Exp(-zt21)));
+
+
+            // dla 4 wektora danych testowych              44444444444444444444
+
+
+            zt11 = ut1[2] * wt111 + ut2[2] * wt112 + ut3[2] * wt3s1 + ut4[2] * wt4s1;
+            st11 = (1 / (1 + Exp(-zt11)));
+
+            zt12 = ut3[2] * wt121 + ut4[2] * wt122 + ut1[2] * wt1s2 + ut2[2] * wt2s2;
+            st12 = (1 / (1 + Exp(-zt12)));
+
+            zt21 = st11 * wt21 + st12 * wt22;
+            st21 = (1 / (1 + Exp(-zt21)));
+            st21 = st21 * 25.05; // odpowiedz sieci przeskalowana do normalnego przedzialu TODO scalling 
+
+            Console.Out.WriteLine(st21);
 
         }
     }
